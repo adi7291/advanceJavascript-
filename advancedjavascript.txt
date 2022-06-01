@@ -1,0 +1,239 @@
+ADVANCED JAVASCRIPT
+===================
+Nested function scope
+Closures
+Currying
+This Keyword
+Prototype
+Prototypal inheritance
+Class
+Itterables and Iterators
+Generators
+
+
+const a=10;
+
+function outer(){
+    const b=20;
+    function inner(){
+        const c=30;
+        console.log(a,b,c)
+    }
+    inner()
+}
+outer()
+//javascript check weather c is defined int the inner function scope =>yes it is its value is 30 so 
+30 is logged in the terminal.It looks for b,It check weather variable b is defined in the inner 
+function scope =>it is not So it will go one level up and checks in the outer function scope yes 
+it is so 20 is loged into the terminal. not it checks weather a is defined in the inner function 
+scope =>no so it go one level up and check weather variable a is defined in the outer function scope 
+=>no so it move one more level up and check in Global scope =>yest and its value is logged in the 
+terminal.This is calles lescical scoping when the javascript function are nested to each other.
+
+Lescical Scope
+==============
+it describes how javascript resolve variable name when function are nested.i.e When we have nested 
+functions javascript variable looks up start with the innermost function where we are trying to access the 
+variable and moves outward till it reaches the Global Scope.
+
+function outer(){
+    count=0;
+    function inner(){
+        debugger;
+        count++
+        console.log(count)
+    }
+    inner()
+}
+outer()//1
+outer()//1
+outer()//1
+//we are calling the outer fuction outer function is calling inner function inside it .It will go to 
+inner function and it incounter the count javascript engine  check weather count is present in inner 
+function scopr or not .it is not then it will go to one level up and check weather it is present in 
+outer function scope yes it is present then it increment the counter value by one and logged into 
+the terminal.
+Here we are invoking(calling) the inner function inside the outer function. On every calling of outer 
+function inner function is called the count value will set to 0 each time.
+
+NOTE
+====
+Nested function have access to variable declared in their on scope as well as variable decleared in
+the outer scope.
+_______________________________________________________________________________________________________
+
+CLOSURE
+=========
+A closre is a combination of a function bundled together with references to its surrounding state.
+closures are creatd every time a function is created,atfunction creation time.
+A Closure is created when a function is returned from another function
+
+    function outer()
+         { 
+          count=0;
+           function () {
+              count++
+             console.log(count)
+             }
+              return inner
+           }
+     const fn=outer()
+       fn()//1
+          fn()//2  
+here we instead of invoking (calling) inner function from within outer function we 
+return it and then invokung twice.
+Here we return inner fnction from the ouuter function.and it just not return the inner function as well 
+as its scope.So we have function inner which is bunddle together with variable counter which is together 
+turned as closure.With closure the inner function has access to variable to the outer function scope 
+even after the oter function finished execution.
+
+const fn=outer()
+     Here outer function execution complete but inner function still has access to the outer variable 
+defined in outer function.
+
+NOTE
+==== 
+In javascript when we return a function from another function ,we are effectively returning a combination
+of the function defination along with the function's scope.The combination of function and its scope
+is what called closure in javascript.By this the value holds by the variable can transfer to the 
+lexcial scope .
+A Closer is created when a function is returned from another function.
+
+closure gives you access to an outer function’s scope from an inner function. In JavaScript, closures 
+are created every time a function is created, at function creation time.
+
+ADVANTAGE OF CLOSURE
+====================
+1>we can make variable and method as private
+
+function roomRent(initialRent){
+    var rent=initialRent;
+    return {
+        getRent : function (){
+            console.log("This Inital Room rent is:",rent)
+        },
+        incRent : function(amount){
+            rent =rent+amount
+            console.log(rent)
+        },
+        decRent : function (amount){
+            rent = rent -amount
+            console.log(rent)
+        }
+    }
+}
+const needToPay = roomRent(8000)
+console.log(needToPay)
+needToPay.getRent()
+needToPay.incRent(2000)
+needToPay.decRent(2000)
+needToPay.decRent(2000)
+
+2) Data Hiding and Encapsulation
+=================================
+function counter(){
+    let count = 0;
+    
+    return function incrementCounter(){
+      count++;
+      console.log(count);
+    }
+}
+console.log(count); // Uncaught ReferenceError: count is not defined
+var counter1 = counter();
+counter1(); //1
+counter1(); //2
+var counter2 = counter();
+counter2(); //1
+counter2(); //2
+counter2(); //3
+
+========================================================================================================
+
+Function Currying :-
+__________________
+ currying is a process in functional proramming in which we transform function with multiple arguments 
+into a sequence of nesting functions that take one argument at a time.
+
+  f(a,b,c) is transformed to =>f(a)(b)(c)
+   function sum(a,b,c){
+       return a+b+c
+     }
+    console.log(sum (2,3,4))//9 here function sm taking multiple arguments and returning the sum of that.
+
+   function add(fn){
+      function (d){
+         function(e){
+            function(f){
+               return fn(d,e,f)
+               }
+            }
+         }
+       }
+const curriedSum=add(sum)
+    console.log( (2) (4) (4.5))//10.5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
